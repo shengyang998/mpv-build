@@ -1,5 +1,13 @@
 #!/bin/sh
 set -e
 
+echo "installing binary executable file to /usr/local/bin..."
 cd mpv
 ./waf install
+echo "binary executable file install completed."
+export SYSTEM = `uname -s`
+if [ $SYSTEM = "Darwin" ] ; then
+    echo "installing bundle mpv.app to /Applications..."
+    cp build/mpv.app /Applications/
+    echo "mpv.app install completed."
+fi

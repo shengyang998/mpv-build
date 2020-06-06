@@ -4,9 +4,23 @@ export LC_ALL=C
 
 #scripts/fribidi-config
 #scripts/fribidi-build $@
-scripts/libass-config
+echo "\nStart building libass"
+scripts/libass-config 
 scripts/libass-build $@
-scripts/ffmpeg-config
+echo "libass building completed"
+echo "\n\nStart building ffmpeg"
+scripts/ffmpeg-config 
 scripts/ffmpeg-build $@
-scripts/mpv-config
+echo "ffmpeg building completed"
+echo "\n\nStart building mpv"
+scripts/mpv-config 
 scripts/mpv-build $@
+echo "mpv build completed"
+
+export SYSTEM = `uname -s`
+if [ $SYSTEM = "Darwin" ] ; then
+    echo "building mpv.app bundle..."
+    TOOLS/osxbundle.py build/mpv
+    TOOLS/dylib-unhell.py build/libmpv
+    echo "mpv.app bundle is built."
+fi
